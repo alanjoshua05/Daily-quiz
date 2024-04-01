@@ -2,13 +2,13 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, time
 
+# Initialize SessionState
+if 'df' not in st.session_state:
+    st.session_state.df = pd.DataFrame()
+
 # Function to store data in a DataFrame
 def store_data_in_dataframe(data):
-    if 'df' not in st.session_state:
-        st.session_state.df = pd.DataFrame([data])
-    else:
-        st.session_state.df = st.session_state.df.append(pd.Series(data), ignore_index=True)
-
+    st.session_state.df = st.session_state.df.append(pd.Series(data), ignore_index=True)
 
 # Function to check if the current time is within the blocked time range
 def is_blocked_time():
@@ -41,6 +41,8 @@ def main():
             data = {'Date': str(current_date), 'Name': name, 'Email': email, 'Question 1': q2, 'Question 2': q1}
             store_data_in_dataframe(data)
             st.success('Data added successfully!')
+            st.write("Current DataFrame:")
+            st.write(st.session_state.df)
 
 if __name__ == '__main__':
     main()
