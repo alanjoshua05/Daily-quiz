@@ -8,7 +8,11 @@ if 'df' not in st.session_state:
 
 # Function to store data in a DataFrame
 def store_data_in_dataframe(data):
+    if 'df' not in st.session_state:
+        st.session_state.df = pd.DataFrame(columns=data.keys())
+
     st.session_state.df = st.session_state.df.append(data, ignore_index=True)
+
 
 # Function to check if the current time is within the blocked time range
 def is_blocked_time():
