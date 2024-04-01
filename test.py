@@ -4,7 +4,7 @@ from datetime import datetime, time
 
 # Initialize SessionState
 if 'df' not in st.session_state:
-    st.session_state.df = pd.DataFrame()
+    st.session_state.df = pd.DataFrame(columns=['Date', 'Name', 'Email', 'Question 1', 'Question 2'])
 
 # Function to store data in a DataFrame
 def store_data_in_dataframe(data):
@@ -12,7 +12,7 @@ def store_data_in_dataframe(data):
 
 # Function to check if the current time is within the blocked time range
 def is_blocked_time():
-    blocked_start_time = time(15, 0)  # e.g., 3:00 PM
+    blocked_start_time = time(17, 0)  # e.g., 3:00 PM
     blocked_end_time = time(17, 0)    # e.g., 5:00 PM
     now = datetime.now().time()
     return blocked_start_time < now < blocked_end_time
