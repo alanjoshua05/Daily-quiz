@@ -2,15 +2,20 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, time
 
-# Function to get user input and add it to the Excel sheet
-def add_data_to_excel(data):
-    df = pd.read_excel('cs.xlsx')  # Read the existing Excel file
-    df = df.append(data, ignore_index=True)  # Append the new data to the DataFrame
-    df.to_excel('cs.xlsx', index=False)  # Write the updated DataFrame back to Excel
+# Function to store data in a DataFrame
+def store_data_in_dataframe(data):
+    if 'df' not in st.session_state:
+        st.session_state.df = pd.DataFrame(columns=['Date', 'Name', 'Email', 'Question 1', 'Question 2'])
+    st.session_state.df = st.session_state.df.append(data, ignore_index=True)
+
+# Function to delete all data from the DataFrame
+def delete_all_data():
+    if 'df' in st.session_state:
+        st.session_state.df = pd.DataFrame(columns=['Date', 'Name', 'Email', 'Question 1', 'Question 2'])
 
 # Function to check if the current time is within the blocked time range
 def is_blocked_time():
-    blocked_start_time = time(15, 0)  # e.g., 8:00 AM
+    blocked_start_time = time(17, 0)  # e.g., 3:00 PM
     blocked_end_time = time(17, 0)    # e.g., 5:00 PM
     now = datetime.now().time()
     return blocked_start_time < now < blocked_end_time
@@ -37,8 +42,16 @@ def main():
         if st.button('Add Data'):
             # Create a dictionary with the user input
             data = {'Date': str(current_date), 'Name': name, 'Email': email, 'Question 1': q2, 'Question 2': q1}
-            add_data_to_excel(data)
+            store_data_in_dataframe(data)
             st.success('Data added successfully!')
+        
+        if st.button('Delete All Data'):
+            delete_all_data()
+            st.success('All data deleted successfully!')
+
+    if 'df' in st.session_state:
+        st.subheader('Current DataFrame:')
+        st.write(st.session_state.df)
 
 if __name__ == '__main__':
     main()
