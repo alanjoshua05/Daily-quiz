@@ -4,9 +4,9 @@ from datetime import datetime, time
 
 # Function to get user input and add it to the Excel sheet
 def add_data_to_excel(data):
-    df = pd.read_excel('CS.xlsx')  # Read the existing Excel file
+    df = pd.read_excel('cs.xlsx')  # Read the existing Excel file
     df = df.append(data, ignore_index=True)  # Append the new data to the DataFrame
-    df.to_excel('CS.xlsx', index=False)  # Write the updated DataFrame back to Excel
+    df.to_excel('cs.xlsx', index=False)  # Write the updated DataFrame back to Excel
 
 # Function to check if the current time is within the blocked time range
 def is_blocked_time():
