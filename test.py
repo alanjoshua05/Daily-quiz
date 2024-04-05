@@ -19,8 +19,6 @@ def is_blocked_time():
     return blocked_start_time < now < blocked_end_time
 
 
-    
-
 # Streamlit app
 st.title('Daily quiz')
 
